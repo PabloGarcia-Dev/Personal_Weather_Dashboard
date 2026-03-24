@@ -6,7 +6,7 @@
   padding: 0;
 }
 
-:root {
+:root{ /*Setting up variables for color pallete*/
   --bg: #F5F2EC;
   --text-primary: #1A1A18;
   --text-secondary: #8A8880;
@@ -15,7 +15,7 @@
   --accent: #2D6A4F;
 }
 
-body {
+body{
   background-color: var(--bg);
   color: var(--text-primary);
   font-family: 'DM Sans', sans-serif;
@@ -23,7 +23,7 @@ body {
   padding: 40px;
 }
 
-#app {
+#app{
   max-width: 1400px;
   margin: 0 auto;
   display: flex;
@@ -32,12 +32,12 @@ body {
 }
 
 /* Clock section */
-#clock-section {
+#clock-section{
   text-align: center;
   padding: 40px 0 20px;
 }
 
-#time {
+#time{
   font-family: 'DM Serif Display', serif;
   font-size: clamp(72px, 12vw, 160px);
   line-height: 1;
@@ -45,7 +45,7 @@ body {
   color: var(--text-primary);
 }
 
-#date {
+#date{
   font-size: clamp(14px, 2vw, 18px);
   font-weight: 300;
   color: var(--text-secondary);
@@ -55,13 +55,13 @@ body {
 }
 
 /* Widgets grid */
-#widgets {
+#widgets{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
-.widget {
+.widget{
   background: var(--widget-bg);
   border: 1px solid var(--widget-border);
   border-radius: 20px;
