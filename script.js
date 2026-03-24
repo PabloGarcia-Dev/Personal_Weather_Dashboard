@@ -28,11 +28,15 @@ async function getWeather() { // async is a keyword that is used when we don't r
     const currentWeather = dataRecieved.current_weather;
     const dailyWeather = dataRecieved.daily;
 
+    // Injecting the HTML
     document.getElementById('weather-widget').innerHTML = `
             <div class="current-temp">${Math.round(currentWeather.temperature)}°F</div>
             <div class="forecast">High: ${Math.round(dailyWeather.temperature_2m_max[0])}°</div>
         `;
 
+
+
+        
     // Array of day names to map the dates
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     let forecastHTML = "";
@@ -53,6 +57,7 @@ async function getWeather() { // async is a keyword that is used when we don't r
         `;
     }
 
+    // Injecting the HTML
     document.getElementById('forecast-bar').innerHTML = forecastHTML;
   }
   catch(error){
