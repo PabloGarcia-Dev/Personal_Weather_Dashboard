@@ -11,7 +11,7 @@ function updateClock(){
   document.getElementById('date').textContent = now.toLocaleDateString('en-US', options); // using the 'now' object, it sets the date with the specified format and updtaes HTML
 }
 
-async function getWeather() { // async is a keyword that is used when we don't really want a function to activate instantly and is waiting for another condition
+async function getWeather(){ // async is a keyword that is used when we don't really want a function to activate instantly and is waiting for another condition
   const latitude = 28.586779934551355; // coordinates of where we are
   const longitude = -81.20615364774744;
 
@@ -29,6 +29,7 @@ async function getWeather() { // async is a keyword that is used when we don't r
     const dailyWeather = dataRecieved.daily;
 
     document.getElementById('weather-widget').innerHTML = `
+            <p> Current Weather Stats: </p>
             <div class="current-temp">${Math.round(currentWeather.temperature)}°F</div>
             <div class="forecast">High: ${Math.round(dailyWeather.temperature_2m_max[0])}°</div>
         `;
@@ -61,10 +62,55 @@ async function getWeather() { // async is a keyword that is used when we don't r
 
 }
 
+async function getShuttleData(){
+    const targetUrl = "https://ucf.transloc.com/Services/JSONPRelay.svc/GetStopArrivalTimes?apiKey=8882812681&stopIds=54&version=2";
+    const proxiedUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl + "&_=" + Date.now())}`;
+
+    try{
+        const response = await fetch(proxiedUrl);
+        const data = await response.json();
+
+        const route2Data = data.find(item => item.RouteDescription === "Route 2");
+
+        if(route2Data && route2Data.Times && route2Data.Times.length > 0){
+            const nextEntry = route2Data.Times.find(t => !t.IsDeparted);
+
+            if(nextEntry){
+                const minutesAway = Math.floor(nextEntry.Seconds / 60);
+                const displayTime = nextEntry.Seconds > 60 ? `${minutesAway} <span style="font-size: 3rem;">min...</span>` : "Arriving!!!";
+
+                document.getElementById('shuttle-routes').innerHTML = `
+                    <p style="font-size: 2.2rem; color: var(--text-secondary); margin-bottom: 1rem;">Route 2 @ Boardwalk</p>
+                    <div style="font-size: 8rem; font-family: 'DM Serif Display'; line-height: 1;">
+                        ${displayTime}
+                    </div>
+                `;
+            }
+            else{
+                document.getElementById('shuttle-routes').innerHTML = `
+                    <p style="font-size: 2.2rem; color: var(--text-secondary);">Route 2 @ Boardwalk</p>
+                    <p style="font-size: 2.5rem; margin-top: 1rem;">Checking for next bus...</p>
+                `;
+            }
+        }
+        else{
+            document.getElementById('shuttle-routes').innerHTML = `
+                <p style="font-size: 2.2rem; color: var(--text-secondary);">Route 2 @ Boardwalk</p>
+                <p style="font-size: 2.5rem; margin-top: 1rem;">No active bus</p>
+            `;
+        }
+    }
+    catch(error){
+        console.error("UCF Shuttle Fetch Error:", error);
+    }
+}
+
 // Run the functions!
 updateClock();
-getWeather(); 
+getWeather();
+getShuttleData();
 
 // Updating Function
 setInterval(updateClock, 1000); // Refresh clock every second (1000 milliseconds)
 setInterval(getWeather, 1800000); // Refresh weather every 30 minutes (1800000 milliseconds)
+setInterval(getShuttleData, 20000); // Refresh the Route 2 widget every minute (60000 milliseconds)
