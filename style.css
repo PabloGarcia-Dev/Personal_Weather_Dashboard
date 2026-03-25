@@ -24,7 +24,7 @@ body{
     color: var(--text-primary);
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
-    padding: 4rem;
+    padding: 2rem;
     display: flex;
 }
 
