@@ -25,6 +25,8 @@ async function getWeather(){ // async is a keyword that is used when we don't re
     const longitude = -81.20615364774744;
 
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=precipitation_probability&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
+    // URL for reference: https://api.open-meteo.com/v1/forecast?latitude=28.586779934551355&longitude=-81.20615364774744&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=precipitation_probability&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto
+
 
     try{
         const response = await fetch(url);
@@ -57,7 +59,7 @@ async function getWeather(){ // async is a keyword that is used when we don't re
             0: "Don't worry, the sky isn't plotting a surprise pool party.",
             1: "The sky has a few clouds, likely just for aesthetic purposes.",
             2: "The sky has a few clouds, likely just for aesthetic purposes.",
-            3: "It's gray, moody, and looks like a Victorian novel out there, still good for walking though.",
+            3: "It’s gray, moody, and looks like a Victorian novel out there, still good for walking though.",
             45: "Render distance is set to 'Very Low' today...",
             48: "Render distance is set to 'Very Low' today...",
             51: "It's not quite raining, but you'll still end up looking like a wet dog by the time you walk 50 feet. Grab an Umbrella just in case!",
@@ -126,8 +128,10 @@ async function getWeather(){ // async is a keyword that is used when we don't re
 
 /*========================================================== Shuttle Function ==========================================================*/
 async function getShuttleData(){
+    const targetUrl = "https://ucf.transloc.com/Services/JSONPRelay.svc/GetStopArrivalTimes?apiKey=8882812681&stopIds=54&version=2";
+
     try{
-        const response = await fetch('http://localhost:3001/shuttle'); // send a request to the proxy server for information
+        const response = await fetch('http://localhost:3001/shuttle'); // send a request to the proxxy server for information
         const data = await response.json(); // Wait for the json file and store it in 'data'
 
         const route2Data = data.find(item => item.RouteDescription === "Route 2"); // Out of all of the information, search specifically for the Route 2 info
@@ -187,60 +191,48 @@ async function getShuttleData(){
 /*========================================================== Parking Function ==========================================================*/
 async function getParkingData() {
     try {
-        // Proxy handles the Puppeteer scrape on the Pi — simple fetch here
-        const response = await fetch('http://localhost:3001/parking');
-        if (!response.ok) throw new Error(`Status ${response.status}`);
+        const response = await fetch("http://localhost:3001/parking");
         const data = await response.json();
 
-        // Replace the old garage constants with this updated mapping
-        const garages = Array.isArray(data) ? data : [];
-
-        // We need to look inside .location.counts for the name
-        const garageA = garages.find(g => g.location?.counts?.location_name === 'Garage A');
-        const garageH = garages.find(g => g.name === "Garage H" || g.location?.counts?.location_name === 'Garage H');
-
-        const renderGarage = (garage) => {
-            if (!garage) return `<div class="garage-info">Data Pending...</div>`;
-
-            // Extracting data from the nested 'location' and 'counts' objects
-            const counts    = garage.location?.counts || {};
-            const name      = counts.location_name || 'Garage';
-            const total     = counts.total_count || 1000;
-            const available = counts.available_count ?? 0;
-            const filled    = total - available;
-            const percent   = Math.round((filled / total) * 100);
-
+        const renderGarage = (item) => {
+            if (!item || !item.location || !item.location.counts) return '';
+            
+            const stats = item.location.counts;
+            const name = item.location.name;
+            const occupied = stats.occupied;
+            const total = stats.total;
+            const available = stats.available;
+            
+            // Calculate percentage based on the data provided
+            const percent = Math.round((occupied / total) * 100);
+            
             let statusColor = "var(--text-primary)";
-            if (percent > 90) statusColor = "#d62828";
-            else if (percent > 75) statusColor = "#f77f00";
+            if (percent > 90) statusColor = "#d62828"; 
+            else if (percent > 75) statusColor = "#f77f00"; 
 
             return `
                 <div class="garage-info">
-                    <span class="garage-name">${name}:</span>
+                    <span class="garage-name">${name}</span>
                     <span class="garage-percent" style="color: ${statusColor}">${percent}% Full</span>
                     <p class="spots-left">${available} spots remaining</p>
                 </div>
             `;
         };
 
+        let mostGaragesHTML = ``;
+        for(let i = 0; i < 6; i++){
+            mostGaragesHTML += renderGarage(data[i]);
+        }
+
         document.getElementById('ucf-parking-widget').innerHTML = `
-            <p id="parking-title">Campus Parking</p>
-            ${renderGarage(garageA)}
-            ${renderGarage(garageH)}
+            <p id="parking-title">All Campus Parking</p>
+            <div id="parking-list" style="max-height: 400px; overflow-y: auto;">
+                ${mostGaragesHTML}
+            </div>
         `;
     } catch (error) {
         console.error("Parking Fetch Error:", error);
-        document.getElementById('ucf-parking-widget').innerHTML = `
-            <p id="parking-title">Campus Parking</p>
-            <div class="garage-info" style="margin-top: 1rem;">
-                <a href="https://parking.ucf.edu/resources/garage-availability/" 
-                   target="_blank"
-                   style="font-family: 'DM Serif Display'; font-size: 3.5rem; color: var(--accent); text-decoration: none;">
-                   View Live Availability →
-                </a>
-                <p class="spots-left" style="margin-top: 1rem;">Opens UCF Parking page</p>
-            </div>
-        `;
+        document.getElementById('ucf-parking-widget').innerHTML = "Failed to load parking data.";
     }
 }
 
@@ -251,7 +243,7 @@ getShuttleData();
 getParkingData();
 
 // Updating Function
-setInterval(updateClock, 1000);       // Refresh clock every second
-setInterval(getWeather, 1800000);     // Refresh weather every 30 minutes
-setInterval(getShuttleData, 20000);   // Refresh shuttle every 20 seconds
-setInterval(getParkingData, 600000);  // Refresh parking every 10 minutes
+setInterval(updateClock, 1000); // Refresh clock every second
+setInterval(getWeather, 1800000); // Refresh weather every 30 minutes
+setInterval(getShuttleData, 20000); // Refresh Route 2 every 20 seconds
+setInterval(getParkingData, 300000); // Refresh Parking every 5 minutes

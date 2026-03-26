@@ -156,29 +156,48 @@ body{
 }
 
 /*========================================= Parking Widget =========================================*/
+#ucf-parking-widget{
+    padding: 0;
+}
+#parking-title{
+    padding: 2rem 2rem 0 2rem;
+}
 #ucf-parking-widget #parking-title{
     font-size: 2.2rem;
     color: var(--text-secondary);
     margin-bottom: 2rem;
 }
-
+#parking-list{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 58rem;
+    height: 35rem;
+    justify-self: center;
+    margin: 0 1rem;
+    padding: 1rem;
+}
 .garage-info{
     margin-bottom: 2.5rem;
+    background-color: whitesmoke;
+    width: 18rem;
+    padding: 0 1rem;
+    border-radius: 1rem;
+    box-shadow: .5rem .3rem rgba(0, 0, 0, 0.12);
 }
 
 .garage-name{
     font-family: 'DM Serif Display';
-    font-size: 4rem;
-    margin-right: 1rem;
+    font-size: 3.8rem;
 }
 
 .garage-percent{
     font-family: 'DM Serif Display';
-    font-size: 4rem;
+    font-size: 3.8rem;
 }
 
 .spots-left{
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: var(--text-secondary);
     margin-top: 0.5rem;
 }

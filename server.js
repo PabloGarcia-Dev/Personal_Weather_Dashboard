@@ -1,60 +1,32 @@
-const http = require('http');
-const https = require('https');
-const urlModule = require('url');
+const http = require('http'); // Dashboard talks to this
+const https = require('https'); // UCF website talks to this
 
-function fetchWithRedirects(targetUrl, headers, callback, maxRedirects = 5) {
-    if (maxRedirects === 0) return callback(new Error('Too many redirects'), null, null);
-    const parsed = urlModule.parse(targetUrl);
-    https.get({ hostname: parsed.hostname, path: parsed.path, headers }, (res) => {
-        if ((res.statusCode === 301 || res.statusCode === 302) && res.headers.location) {
-            return fetchWithRedirects(res.headers.location, headers, callback, maxRedirects - 1);
-        }
-        let raw = '';
-        res.on('data', c => raw += c);
-        res.on('end', () => callback(null, res.statusCode, raw));
-    }).on('error', err => callback(err, null, null));
-}
+const server = http.createServer((req, res) => { // Sets up a "listener" that waits for the dashboard to send a request to the server to run the code
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Acts as the 'permission slip' that tells the browser that it is okay to send the information (CORS killer)
+    res.setHeader('Content-Type', 'application/json'); // Tell the dashboard it's getting info
 
-const server = http.createServer((req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Content-Type', 'application/json');
-
-    const reqUrl = req.url;
     let targetUrl = '';
-    let headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36' };
 
-    if (reqUrl.startsWith('/shuttle')) {
+    if(req.url === '/shuttle'){
         targetUrl = 'https://ucf.transloc.com/Services/JSONPRelay.svc/GetStopArrivalTimes?apiKey=8882812681&stopIds=54&version=2';
-
-    } else if (reqUrl.startsWith('/parking')) {
-        targetUrl = 'https://parking.ucf.edu/wp-json/garage/v2/occupancy';
-        headers = {
-            ...headers,
-            'X-Api-Key':        'ICANTHEARYOUSAYsupercalifragilisticexpialidociousIsALongNameToSay',
-            'X-Requested-With': 'XMLHttpRequest',
-            'Accept':           'application/json, text/javascript, */*; q=0.01',
-            'Referer':          'https://parking.ucf.edu/resources/garage-availability/',
-            'Accept-Language':  'en-US,en;q=0.9',
-        };
-
-    } else {
+    }
+    else if(req.url === '/parking'){
+        targetUrl = 'https://flow.my.ucf.edu/upstream/parking_widget';
+    }
+    else{
         res.writeHead(404);
-        return res.end(JSON.stringify({ error: "Route not found." }));
+        return res.end(JSON.stringify({ error: "Route not found. Use /shuttle or /parking" }));
     }
 
-    fetchWithRedirects(targetUrl, headers, (err, statusCode, rawData) => {
-        if (err) {
-            console.error(`[${reqUrl}] Error:`, err.message);
-            res.writeHead(500);
-            return res.end(JSON.stringify({ error: err.message }));
-        }
-        console.log(`[${reqUrl}] Status: ${statusCode} | ${rawData.slice(0, 150)}`);
-        if (statusCode < 200 || statusCode >= 300) {
-            res.writeHead(500);
-            return res.end(JSON.stringify({ error: `API returned ${statusCode}`, body: rawData.slice(0, 200) }));
-        }
-        res.end(rawData);
+    https.get(targetUrl, (apiRes) => {
+        let body = '';
+        apiRes.on('data', chunk => body += chunk); // Adds the chunks together that come from the internet into the 'body' variable
+        apiRes.on('end', () => res.end(body)); // Once all of the chunks are recieved, send all those chunks
+    }).on('error', (err) => { // Error handling, prevents crashing
+        res.writeHead(500);
+        res.end(JSON.stringify({ error: err.message }));
     });
 });
 
-server.listen(3001, () => console.log('Proxy active at http://localhost:3001'));
+// Places proxxy server in port 3001 and sends a message in console to let us know it's up
+server.listen(3001, () => console.log('Master Proxy active at http://localhost:3001'));
