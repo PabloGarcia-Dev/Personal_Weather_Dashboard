@@ -92,18 +92,24 @@ body{
 
 /*========================================= Current Weather Widget =========================================*/
 #weather-widget p{
-    font-size: 3.2rem;
+    font-size: 3.5rem;
+    font-family: 'DM Serif Display';
 }
 
 #weather-widget .current-day-stats{
     font-size: 4rem;
-    font-family: 'DM Serif Display';
 }
 
 /*========================================= Forecast Bar =========================================*/
 #forecast-bar{
     text-align: center;
     width: fit-content;
+    margin-top: 8rem;
+}
+
+#forecast-bar #forecast-title{
+    font-family: 'DM Serif Display';
+    font-size: 4rem;
 }
 
 .forecast-day{
@@ -118,11 +124,17 @@ body{
     text-transform: uppercase;
     font-size: 4rem;
     color: var(--text-secondary);
+    margin-bottom: -1rem;
 }
 
 .day-temp{
     font-size: 3rem;
     font-weight: 400;
+    margin-bottom: -1rem;
+}
+
+.day-rain{
+    font-size: 2rem;
 }
 
 /*========================================= Shuttle Widget =========================================*/
@@ -141,4 +153,32 @@ body{
     color: var(--text-secondary);
     margin-top: 1rem;
     font-family: 'DM Serif Display';
+}
+
+/*========================================= Parking Widget =========================================*/
+#ucf-parking-widget #parking-title{
+    font-size: 2.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.garage-info{
+    margin-bottom: 2.5rem;
+}
+
+.garage-name{
+    font-family: 'DM Serif Display';
+    font-size: 4rem;
+    margin-right: 1rem;
+}
+
+.garage-percent{
+    font-family: 'DM Serif Display';
+    font-size: 4rem;
+}
+
+.spots-left{
+    font-size: 2rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
 }

@@ -2,11 +2,17 @@
 function updateClock(){
     const now = new Date(); // Creates a Date object called 'now' to access the date and time
 
-    const hours = now.getHours().toString().padStart(2, '0'); // .padStart() function adds whatever character is specified at the beginning of the string if it doesn't have the required number of characters: in this case 2
+    let hours = now.getHours(); // .padStart() function adds whatever character is specified at the beginning of the string if it doesn't have the required number of characters: in this case 2
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const seconds = now.getSeconds().toString().padStart(2, '0');
 
-    document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`; // sets the hours, minutes and seconds by updating HTML
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+
+    document.getElementById('time').innerHTML = `
+            <span>${hours}:${minutes}:${seconds}</span><span style="font-size: 6rem">${ampm}</span>
+
+    `; // sets the hours, minutes and seconds by updating HTML
 
     const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' }; // specifies the actual format for the date
     document.getElementById('date').textContent = now.toLocaleDateString('en-US', options); // using the 'now' object, it sets the date with the specified format and updtaes HTML
@@ -18,9 +24,7 @@ async function getWeather(){ // async is a keyword that is used when we don't re
     const latitude = 28.586779934551355; // coordinates of where we are
     const longitude = -81.20615364774744;
 
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&daily=temperature_2m_max,temperature_2m_min`;
-    // URL for reference: https://api.open-meteo.com/v1/forecast?latitude=28.586779934551355&longitude=-81.20615364774744&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&daily=temperature_2m_max,temperature_2m_min
-
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=precipitation_probability&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
 
     try{
         const response = await fetch(url);
@@ -50,10 +54,10 @@ async function getWeather(){ // async is a keyword that is used when we don't re
             95: "Thunderstorm"
         }
         const weatherTips = { // Little messages for the description
-            0: "A day where the sky isn't plotting a surprise pool party.",
-            1: "The sky has a few clouds, likely just for aesthetic purposes and to give you false hope of shade.",
-            2: "The sky has a few clouds, likely just for aesthetic purposes and to give you false hope of shade.",
-            3: "It’s gray, moody, and looks like a Victorian novel out there, still good for walking though.",
+            0: "Don't worry, the sky isn't plotting a surprise pool party.",
+            1: "The sky has a few clouds, likely just for aesthetic purposes.",
+            2: "The sky has a few clouds, likely just for aesthetic purposes.",
+            3: "It's gray, moody, and looks like a Victorian novel out there, still good for walking though.",
             45: "Render distance is set to 'Very Low' today...",
             48: "Render distance is set to 'Very Low' today...",
             51: "It's not quite raining, but you'll still end up looking like a wet dog by the time you walk 50 feet. Grab an Umbrella just in case!",
@@ -67,15 +71,16 @@ async function getWeather(){ // async is a keyword that is used when we don't re
         }
         const description = weatherCodes[currentWeather.weather_code] || "Unknown condition"; // Description, If unknown pops up, go into URL and see what the current weather code is
         const tips = weatherTips[currentWeather.weather_code] || "I got nothing for yah..."; // After that, add a description to 'weatherTips'
-    
+        const currentRainChance = dataRecieved.hourly.precipitation_probability[0] || 'N/A';
 
         // Injecting HTML for the weather widget
         document.getElementById('weather-widget').innerHTML = `
                 <p> Current Weather Stats: </p>
                 <div class="current-day-stats">${Math.round(currentWeather.temperature_2m)}°F</div>
-                <div class="current-day-stats">High: ${Math.round(dailyWeather.temperature_2m_max[0])}°</div>
+                <div class="current-day-stats">High: ${Math.round(dailyWeather.temperature_2m_max[0])}°F</div>
                 <div class="current-day-stats">Wind Speed: ${currentWeather.wind_speed_10m} mph</div>
                 <div class="current-day-stats">Humidity: ${humidity}%</p>
+                <div class="current-day-stats" style="color: #3b82f6;">Hourly Chance of Rain: ${currentRainChance}%</div>
             `;
 
         // Injecting HTML for the recommendations widget
@@ -87,7 +92,9 @@ async function getWeather(){ // async is a keyword that is used when we don't re
 
         // Array of day names to map the dates
         const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        let forecastHTML = "";
+        let forecastHTML = `
+                <p id="forecast-title">Week at a Glance</p>
+        `;
 
         // Loop through the next 6 days (starting at index 1 for tomorrow)
         for(let i = 1; i <= 6; i++){
@@ -96,12 +103,14 @@ async function getWeather(){ // async is a keyword that is used when we don't re
             const dayNumber = date.getDate();
             const maxTemp = Math.round(dailyWeather.temperature_2m_max[i]);
             const minTemp = Math.round(dailyWeather.temperature_2m_min[i]);
+            const rainChance = dailyWeather.precipitation_probability_max[i];
 
             // Adding the HTML that will be injected into index.html
             forecastHTML += `
                 <div class="forecast-day">
                     <span class="day-name">${dayName} ${dayNumber}</span>
-                    <span class="day-temp">${maxTemp}° / ${minTemp}°</span>
+                    <span class="day-temp">${maxTemp}° / ${minTemp}°F</span>
+                    <span class="day-rain">Chance of Rain: ${rainChance}%</span>
                 </div>
             `;
         }
@@ -115,13 +124,10 @@ async function getWeather(){ // async is a keyword that is used when we don't re
 }
 
 
-
 /*========================================================== Shuttle Function ==========================================================*/
 async function getShuttleData(){
-    const targetUrl = "https://ucf.transloc.com/Services/JSONPRelay.svc/GetStopArrivalTimes?apiKey=8882812681&stopIds=54&version=2";
-
     try{
-        const response = await fetch('http://localhost:3001'); // send a request to the proxxy server for information
+        const response = await fetch('http://localhost:3001/shuttle'); // send a request to the proxy server for information
         const data = await response.json(); // Wait for the json file and store it in 'data'
 
         const route2Data = data.find(item => item.RouteDescription === "Route 2"); // Out of all of the information, search specifically for the Route 2 info
@@ -177,12 +183,75 @@ async function getShuttleData(){
     }
 }
 
+
+/*========================================================== Parking Function ==========================================================*/
+async function getParkingData() {
+    try {
+        // Proxy handles the Puppeteer scrape on the Pi — simple fetch here
+        const response = await fetch('http://localhost:3001/parking');
+        if (!response.ok) throw new Error(`Status ${response.status}`);
+        const data = await response.json();
+
+        // Replace the old garage constants with this updated mapping
+        const garages = Array.isArray(data) ? data : [];
+
+        // We need to look inside .location.counts for the name
+        const garageA = garages.find(g => g.location?.counts?.location_name === 'Garage A');
+        const garageH = garages.find(g => g.name === "Garage H" || g.location?.counts?.location_name === 'Garage H');
+
+        const renderGarage = (garage) => {
+            if (!garage) return `<div class="garage-info">Data Pending...</div>`;
+
+            // Extracting data from the nested 'location' and 'counts' objects
+            const counts    = garage.location?.counts || {};
+            const name      = counts.location_name || 'Garage';
+            const total     = counts.total_count || 1000;
+            const available = counts.available_count ?? 0;
+            const filled    = total - available;
+            const percent   = Math.round((filled / total) * 100);
+
+            let statusColor = "var(--text-primary)";
+            if (percent > 90) statusColor = "#d62828";
+            else if (percent > 75) statusColor = "#f77f00";
+
+            return `
+                <div class="garage-info">
+                    <span class="garage-name">${name}:</span>
+                    <span class="garage-percent" style="color: ${statusColor}">${percent}% Full</span>
+                    <p class="spots-left">${available} spots remaining</p>
+                </div>
+            `;
+        };
+
+        document.getElementById('ucf-parking-widget').innerHTML = `
+            <p id="parking-title">Campus Parking</p>
+            ${renderGarage(garageA)}
+            ${renderGarage(garageH)}
+        `;
+    } catch (error) {
+        console.error("Parking Fetch Error:", error);
+        document.getElementById('ucf-parking-widget').innerHTML = `
+            <p id="parking-title">Campus Parking</p>
+            <div class="garage-info" style="margin-top: 1rem;">
+                <a href="https://parking.ucf.edu/resources/garage-availability/" 
+                   target="_blank"
+                   style="font-family: 'DM Serif Display'; font-size: 3.5rem; color: var(--accent); text-decoration: none;">
+                   View Live Availability →
+                </a>
+                <p class="spots-left" style="margin-top: 1rem;">Opens UCF Parking page</p>
+            </div>
+        `;
+    }
+}
+
 // Run the functions!
 updateClock();
 getWeather();
 getShuttleData();
+getParkingData();
 
 // Updating Function
-setInterval(updateClock, 1000); // Refresh clock every second (1000 milliseconds)
-setInterval(getWeather, 1800000); // Refresh weather every 30 minutes (1800000 milliseconds)
-setInterval(getShuttleData, 20000); // Refresh the Route 2 widget every minute (60000 milliseconds)
+setInterval(updateClock, 1000);       // Refresh clock every second
+setInterval(getWeather, 1800000);     // Refresh weather every 30 minutes
+setInterval(getShuttleData, 20000);   // Refresh shuttle every 20 seconds
+setInterval(getParkingData, 600000);  // Refresh parking every 10 minutes
