@@ -2,7 +2,7 @@ let playerCount = 4;
 let holdTimer = null;
 const grid = document.getElementById('player-grid');
 
-function initPlayers() {
+function createPlayerCards(){
     grid.innerHTML = '';
     grid.className = playerCount <= 2 ? 'grid-2' : playerCount <= 4 ? 'grid-4' : 'grid-10';
     for (let i = 1; i <= playerCount; i++) {
@@ -94,8 +94,8 @@ function checkStatus(id) {
 }
 
 // Existing Controls
-function addPlayer() { if (playerCount < 10) { playerCount++; initPlayers(); } }
-function removePlayer() { if (playerCount > 1) { playerCount--; initPlayers(); } }
-function resetGame() { playerCount = 4; initPlayers(); }
+function addPlayer() { if (playerCount < 10) { playerCount++; createPlayerCards(); } }
+function removePlayer() { if (playerCount > 1) { playerCount--; createPlayerCards(); } }
+function resetGame() { playerCount = 4; createPlayerCards(); }
 
-initPlayers();
+createPlayerCards();
