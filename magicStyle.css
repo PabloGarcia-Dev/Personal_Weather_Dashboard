@@ -12,11 +12,10 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Keeps it dashboard-style */
 }
 
 /* Header & Styled Add Button */
-#mtg-controls {
+#mtg-controls{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,7 +23,7 @@ body {
     background: black;
 }
 
-.add-player-btn {
+.add-player-btn{
     background: var(--inferno);
     color: white;
     border: none;
@@ -36,13 +35,13 @@ body {
     transition: transform 0.2s, background 0.2s;
 }
 
-.add-player-btn:hover {
+.add-player-btn:hover{
     background: #ff0000;
     transform: scale(1.05);
 }
 
 /* Dynamic Grid Scaling */
-#player-grid {
+#player-grid{
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
@@ -52,7 +51,7 @@ body {
     flex-grow: 1;
 }
 
-.player-card {
+.player-card{
     position: relative; /* For the watermark */
     background: var(--charcoal);
     border: 2px solid #333;
@@ -67,12 +66,12 @@ body {
 }
 
 /* Watermark Logic */
-.player-card.defeated {
+.player-card.defeated{
     opacity: 0.5;
     filter: grayscale(0.8);
 }
 
-.player-card.defeated::after {
+.player-card.defeated::after{
     content: "DEFEATED";
     position: absolute;
     top: 50%;
@@ -87,14 +86,14 @@ body {
     pointer-events: none;
 }
 
-.life-total {
+.life-total{
     font-family: 'DM Serif Display';
     font-size: 7rem;
     text-align: center;
     color: var(--mint);
 }
 
-.life-btn {
+.life-btn{
     height: 6rem;
     border: none;
     border-radius: 1rem;
@@ -103,23 +102,32 @@ body {
     color: white;
 }
 
-.nav-btn {
+.nav-link-wrapper{
     text-decoration: none;
-    background: var(--charcoal);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 1.2rem 2.5rem;
-    border-radius: 5rem;
-    color: var(--mint);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-size: 1.4rem;
-    transition: all 0.3s ease;
+    display: block; /* Ensures it takes up space */
+    z-index: 100; /* Keeps it above other elements */
 }
+.dashboard{
+    background-image: url(images/weather-app-thick-line-filled-dark-colors-icons-for-personal-and-commercial-use-free-vector.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: whitesmoke;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 1.5rem;
+    margin-left: 3rem;
+    margin-top: 3rem;
 
-.nav-btn:hover {
-    background: var(--inferno);
-    transform: translateY(-0.2rem);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.dashboard:hover{
+    cursor: pointer;
+    transform: translateY(-.5rem);
+    box-shadow: 0 .5rem 1.2rem rgba(255, 255, 255, 0.08);
+}
+.dashboard:active{
+    opacity: .85;
 }
 
 .minus { background-color: var(--black); }

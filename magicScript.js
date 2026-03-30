@@ -29,13 +29,20 @@ function createPlayerCard(id) {
         </div>
         <div style="margin-top: 15px; border-top: 1px solid #444; padding-top: 10px; text-align: center;">
             <span>Commander Damage</span>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+            <div class="cmdr-damg-bttns" style="display: flex; justify-content: center; align-items: center; gap: 15px;">
                 <button onclick="updateCmdr(${id}, -1)" style="padding: 5px 10px;">-</button>
                 <b id="cmdr-${id}" style="font-size: 2rem;">0</b>
                 <button onclick="updateCmdr(${id}, 1)" style="padding: 5px 10px;">+</button>
             </div>
         </div>
     `;
+
+    document.getElementById('button-hover-style').innerHTML = `
+        .cmdr-damg-bttns button:hover{
+            cursor: pointer;
+        }
+    `;
+
     grid.appendChild(card);
 }
 

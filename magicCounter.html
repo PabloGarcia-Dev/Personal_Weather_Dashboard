@@ -5,10 +5,13 @@
     <title>MTG Commander Counter</title>
     <link rel="icon" href="images/mtg-logo.png">
     <link rel="stylesheet" href="magicStyle.css">
+    <style id="button-hover-style"></style>
 </head>
 <body>
     <header id="mtg-controls">
-        <a href="index.html" class="nav-btn">← Exit to Dashboard</a>
+        <a href="index.html" class="nav-link-wrapper">
+            <div class="dashboard" title="Open Dashboard"></div>
+        </a>
         
         <div class="counter-settings">
             <button onclick="removePlayer()" class="add-player-btn" style="background: var(--charcoal); margin-right: 1rem;">Remove Player</button>
@@ -17,8 +20,7 @@
         </div>
     </header>
 
-    <main id="player-grid" class="grid-4">
-        </main>
+    <main id="player-grid" class="grid-4"></main>
 
     <script src="magicScript.js"></script>
 </body>

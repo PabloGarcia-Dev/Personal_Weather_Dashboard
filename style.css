@@ -297,21 +297,22 @@ body{
     font-size: 1.8rem;
 }
 
-.solar-track {
+.solar-track{
     position: relative;
     height: 1.2rem;
     background: linear-gradient(to right, #ff9c2a, #ffffff, rgb(44, 44, 255));
     border-radius: 1rem;
+    border: .2rem solid whitesmoke;
 }
 
-.solar-progress {
+.solar-progress{
     height: 100%;
     background: var(--text-primary);
     opacity: 0.2;
     border-radius: 1rem;
 }
 
-.sun-marker {
+.sun-marker{
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -331,10 +332,9 @@ body{
     background-position: center;
     background-size: cover;
     background-color: black;
-    height: 8rem;
-    width: 8rem;
+    height: 6rem;
+    width: 6rem;
     border-radius: 1.5rem;
-    position: absolute;
     margin-left: 3rem;
     margin-top: 3rem;
 
@@ -347,9 +347,4 @@ body{
 }
 .magic-life-counter:active{
     opacity: .85;
-}
-.magic-life-counter a{
-    height: 8rem;
-    width: 8rem;
-    border-radius: 1.5rem;
 }
