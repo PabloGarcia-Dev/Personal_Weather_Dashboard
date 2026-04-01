@@ -26,7 +26,7 @@ function updateClock(){
     // Logic for Night Time theme
     const root = document.documentElement;
     
-    if((hours >= 6 && ampm == "PM") || (hours <= 6 && ampm == "AM")){
+    if((hours >= 6 && ampm == "PM") || (hours <= 7 && ampm == "AM")){
         root.style.setProperty('--bg', '#0D0D0B');
         root.style.setProperty('--text-primary', '#E0DFD5');
         root.style.setProperty('--text-secondary', '#63635E');
