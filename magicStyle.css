@@ -1,4 +1,4 @@
-:root {
+:root{
     --black: #000000;
     --inferno: #B20000;
     --charcoal: #5F5F5F;
@@ -85,6 +85,11 @@ body{
     transition: all 0.3s ease;
 }
 
+.player-card:hover{
+    transform: translateY(-.2rem);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
+}
+
 /* Watermark Logic */
 .player-card.defeated{
     opacity: 0.5;
@@ -136,8 +141,8 @@ body{
     height: 70px;
     width: 70px;
     border-radius: 15px;
-    margin-left: 3rem;
-    margin-top: 3rem;
+    margin-left: -9px;
+    margin-top: -9px;
 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

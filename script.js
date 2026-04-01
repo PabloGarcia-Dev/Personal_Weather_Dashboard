@@ -16,6 +16,18 @@ function updateClock(){
 
     const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' }; // specifies the actual format for the date
     document.getElementById('date').textContent = now.toLocaleDateString('en-US', options); // using the 'now' object, it sets the date with the specified format and updtaes HTML
+
+    // Logic for Night Time theme
+    if((hours >= 6 && ampm == "PM") || (hours <= 6 && ampm == "AM")){
+        const root = document.documentElement;
+
+        root.style.setProperty('--bg', '#0D0D0B');
+        root.style.setProperty('--text-primary', '#E0DFD5');
+        root.style.setProperty('--text-secondary', '#63635E');
+        root.style.setProperty('--widget-bg', '#1A1A18');
+        root.style.setProperty('--widget-border', 'rgba(255, 255, 255, 0.05)');
+        root.style.setProperty('--accent', '#501f1f');
+    }
 }
 
 
