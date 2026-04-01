@@ -1,3 +1,9 @@
+const daylightSound = new Audio('audio/Luffy_Theme.mp3'); 
+const nightfallSound = new Audio('audio/Zoro_Theme.mp3');
+
+let hasPlayedDaySound = false;
+let hasPlayedNightSound = false;
+
 /*========================================================== Clock Function ==========================================================*/
 function updateClock(){
     const now = new Date(); // Creates a Date object called 'now' to access the date and time
@@ -18,15 +24,38 @@ function updateClock(){
     document.getElementById('date').textContent = now.toLocaleDateString('en-US', options); // using the 'now' object, it sets the date with the specified format and updtaes HTML
 
     // Logic for Night Time theme
+    const root = document.documentElement;
+    
     if((hours >= 6 && ampm == "PM") || (hours <= 6 && ampm == "AM")){
-        const root = document.documentElement;
-
         root.style.setProperty('--bg', '#0D0D0B');
         root.style.setProperty('--text-primary', '#E0DFD5');
         root.style.setProperty('--text-secondary', '#63635E');
         root.style.setProperty('--widget-bg', '#1A1A18');
         root.style.setProperty('--widget-border', 'rgba(255, 255, 255, 0.05)');
         root.style.setProperty('--accent', '#501f1f');
+
+        // Play sound ONLY when entering Night mode for the first time
+        if(!hasPlayedNightSound){
+            nightfallSound.play().catch(e => console.log("Audio blocked: Needs user interaction"));
+            hasPlayedNightSound = true;
+            hasPlayedDaySound = false; // load the Day sound for tomorrow morning
+        }
+    }
+    else{
+        root.style.setProperty('--bg', '#F5F2EC');
+        root.style.setProperty('--text-primary', '#1A1A18');
+        root.style.setProperty('--text-secondary', '#8A8880');
+        root.style.setProperty('--widget-bg', '#FFFFFF');
+        root.style.setProperty('--widget-border', 'rgba(0, 0, 0, 0.07)');
+        root.style.setProperty('--accent', '#d7fffe');
+
+        // Play sound ONLY when entering Day mode for the first time
+        if(!hasPlayedDaySound){
+            // Check if it's NOT the very first second of the script loading
+            daylightSound.play().catch(e => console.log("Audio blocked: Needs user interaction"));
+            hasPlayedDaySound = true;
+            hasPlayedNightSound = false; // load the Night sound for tonight
+        }
     }
 }
 
