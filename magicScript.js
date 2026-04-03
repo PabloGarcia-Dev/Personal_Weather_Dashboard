@@ -117,13 +117,14 @@ function checkStatus(id){
         16: "Took the L",
         17: "Done For",
         18: "Terminated",
-        19: "Tapped Out"
+        19: "Tapped Out",
+        20: "Blue-Shelled"
     }
 
     const life = parseInt(document.getElementById(`life-${id}`).innerText);
     const cmdr = parseInt(document.getElementById(`cmdr-${id}`).innerText);
     const card = document.getElementById(`card-${id}`);
-    const randNum = Math.floor(Math.random() * 20);
+    const randNum = Math.floor(Math.random() * 21);
     
     if((life <= 0 || cmdr >= 21) && !(card.classList.contains('defeated'))){
         card.style.setProperty('--defeat-msg', `"${defeatedMessage[randNum]}"`);
