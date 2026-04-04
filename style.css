@@ -343,7 +343,7 @@ body{
     z-index: 100; /* Keeps it above other elements */
 }
 .magic-life-counter{
-    background-image: url(images/mtg-logo.png);
+    background-image: url(images/mtg-icon.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -364,3 +364,26 @@ body{
 .magic-life-counter:active{
     opacity: .85;
 }
+
+/*========================================= System Stats Widget =========================================*/
+.system-link-wrapper {
+    position: absolute;
+    right: 3rem;
+    top: 3rem;
+    text-decoration: none;
+}
+
+.system-icon {
+    width: 7rem;
+    height: 7rem;
+    background-color: #00d4ff;
+    border-radius: 1.5rem;
+    /* Use a terminal or chip icon here */
+    background-image: url('images/chip-icon.png'); 
+    background-size: 60%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+}
+
+.system-icon:hover { transform: translateY(-.5rem); }

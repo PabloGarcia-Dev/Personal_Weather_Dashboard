@@ -1,0 +1,173 @@
+:root {
+    --bg-dark: #0a0a0a;
+    --card-bg: #141414;
+    --neon-blue: #00d4ff;
+    --neon-green: #39ff14;
+    --neon-orange: #ff9c2a;
+    --neon-red: #ff3c3c;
+    --text-main: #e0e0e0;
+    --text-dim: #8d8d8d;
+    --border: #222;
+}
+
+body{
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 4rem;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Header */
+#system-header{
+    border-left: 5px solid var(--neon-blue);
+    padding-left: 2rem;
+    margin-bottom: 5rem;
+}
+
+#system-header h1{
+    font-family: 'DM Serif Display', serif;
+    font-size: 4.5rem;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+}
+
+.back-btn{
+    color: var(--neon-blue);
+    text-decoration: none;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Stats Grid */
+.stats-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+    gap: 3rem;
+    max-width: 160rem;
+}
+
+.stat-card{
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover{
+    cursor: pointer;
+    transform: translateY(-.5rem);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
+}
+
+/* Decorative corner bracket */
+.stat-card::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 20px; height: 20px;
+    border-top: 2px solid var(--neon-blue);
+    border-left: 2px solid var(--neon-blue);
+}
+
+/* Warning state for throttle card */
+.card-warning{
+    border-color: var(--neon-red);
+}
+
+.card-warning::before {
+    border-color: var(--neon-red);
+}
+
+/* Labels & Values */
+.stat-label{
+    display: block;
+    font-size: 1.4rem;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+}
+
+.stat-big{
+    font-family: 'DM Serif Display';
+    font-size: 4.2rem;
+    color: var(--text-main);
+    line-height: 1;
+}
+
+.stat-big--sm{
+    font-size: 3.2rem;
+}
+
+.stat-big--ip{
+    font-size: 2.2rem;
+    letter-spacing: 0.05em;
+}
+
+.stat-sub{
+    font-size: 1.4rem;
+    color: var(--text-dim);
+    margin-top: 1rem;
+    display: block;
+    letter-spacing: 2px;
+}
+
+.stat-sub--detail{
+    font-size: 1.6rem;
+    margin-top: 0.5rem;
+}
+
+/* Status colors */
+.status-healthy{
+    color: var(--neon-green);
+    text-shadow: 0 0 20px var(--neon-green);
+}
+
+.status-warning {
+    color: var(--neon-red);
+    text-shadow: 0 0 20px var(--neon-red);
+}
+
+.status-offline{
+    color: var(--text-dim);
+}
+
+/* Progress Bars */
+.progress-bar{
+    height: 0.4rem;
+    background: #1a1a1a;
+    margin-top: 2rem;
+    border-radius: 4px;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fill-blue{
+    background: var(--neon-blue);
+    box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.fill-green{
+    background: var(--neon-green);
+    box-shadow: 0 0 15px var(--neon-green);
+}
+
+.fill-orange{
+    background: var(--neon-orange);
+    box-shadow: 0 0 15px var(--neon-orange);
+}
+
+.fill-red{
+    background: var(--neon-red);
+    box-shadow: 0 0 15px var(--neon-red);
+}

@@ -14,7 +14,7 @@ body{
     flex-direction: column;
     overflow: hidden;
 
-    background-image: url(images/mtg-logo.png);
+    background-image: url(images/mtg-icon.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

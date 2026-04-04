@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pi 5 System Node</title>
+    <link rel="stylesheet" href="systemStyle.css">
+</head>
+<body>
+    <header id="system-header">
+        <a href="index.html" class="back-btn">Return</a>
+        <h1>System Host: Pi 5</h1>
+    </header>
+    
+    <main class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-label">CPU LOAD CORE AVERAGE</span>
+            <span id="cpu-val" class="stat-big">0%</span>
+            <div class="progress-bar"><div id="cpu-fill" class="progress-fill fill-blue"></div></div>
+        </div>
+        
+        <div class="stat-card">
+            <span class="stat-label">MEMORY RESERVED: 2GB</span>
+            <span id="ram-val" class="stat-big">0MB</span>
+            <div class="progress-bar"><div id="ram-fill" class="progress-fill fill-green"></div></div>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">THERMAL SENSORS</span>
+            <span id="temp-val" class="stat-big">0°C</span>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">SYSTEM UPTIME LOG</span>
+            <span id="uptime-val" class="stat-big stat-big--sm">0h</span>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">DISK USAGE ROOTFS</span>
+            <span id="disk-val" class="stat-big">—</span>
+            <div class="progress-bar"><div id="disk-fill" class="progress-fill fill-orange"></div></div>
+            <span id="disk-detail" class="stat-sub">USED / TOTAL</span>
+        </div>
+
+        <div class="stat-card" id="throttle-card">
+            <span class="stat-label">THROTTLE STATUS</span>
+            <span id="throttle-val" class="stat-big stat-big--sm">—</span>
+            <span id="throttle-code" class="stat-sub">CODE: —</span>
+            <span id="throttle-detail" class="stat-sub stat-sub--detail"></span>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">NETWORK LOCAL: IPV4</span>
+            <span id="ip-val" class="stat-big stat-big--ip">—</span>
+        </div>
+    </main>
+
+    <script src="systemScript.js"></script>
+</body>
+</html>
