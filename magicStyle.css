@@ -16,7 +16,7 @@ body{
     background-image: url(images/mtg-icon.png);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: 80%;
 }
 /*========================================= Header & Styled Add Button =========================================*/
 #mtg-controls{

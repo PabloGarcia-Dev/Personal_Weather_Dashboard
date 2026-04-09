@@ -136,13 +136,21 @@ async function getWeather(){ // async is a keyword that is used when we don't re
             const maxTemp = Math.round(dailyWeather.temperature_2m_max[i]);
             const minTemp = Math.round(dailyWeather.temperature_2m_min[i]);
             const rainChance = dailyWeather.precipitation_probability_max[i];
+            let dayIcon;
+            if(rainChance > 80) dayIcon = '🌦️';
+            else if(rainChance > 60) dayIcon = '🌥️';
+            else if(rainChance > 40) dayIcon = '⛅';
+            else if(rainChance > 20) dayIcon = '🌤️';
+            else dayIcon = `☀️`;
 
             // Adding the HTML that will be injected into index.html
             forecastHTML += `
                 <div class="forecast-day">
-                    <span class="day-name">${dayName} ${dayNumber}</span>
-                    <span class="day-temp">${maxTemp}° / ${minTemp}°F</span>
-                    <span class="day-rain">Chance of Rain: ${rainChance}%</span>
+                    <div class="day-stats">
+                        <span class="day-name">${dayName} ${dayNumber}</span>
+                        <span class="day-temp">${maxTemp}° / ${minTemp}°F</span>
+                        <span class="day-rain">${dayIcon} Chance of Rain: ${rainChance}%</span>
+                    </div>
                 </div>
             `;
         }
@@ -211,8 +219,10 @@ async function getShuttleData(){
         // If there are no bus routes active
         else{
             document.getElementById('shuttle-routes-widget').innerHTML = `
-                <p>Route 2 @ Boardwalk Stop</p>
-                <p style="margin-top: 1rem;">No active shuttle routes</p>
+                <p id="shuttle-widget-title">Shuttle Route</p>
+                <p id="route-title">Route 2 @ Boardwalk Stop</p>
+                <p style="margin-top: 1rem;">No Active Shuttle Routes.</p>
+                <span class="last-updated" id="last-updated-shuttle">Last Updated: ${lastUpdatedTime()}</span>
             `;
         }
     }
@@ -298,7 +308,7 @@ function updateSolarTracker(data){
     
     // If it's night time, we'll show a "Night" state
     const isNight = now < sunrise || now > sunset;
-    const sunIcon = isNight ? '🌙' : '☀️';
+    const sunIcon = isNight ? '🌕' : '☀️';
     const statusText = isNight ? "Moonlight" : "Daylight";
 
     document.getElementById('weather-widget').innerHTML += `

@@ -197,7 +197,6 @@ body{
 #forecast-bar{
     display: flex;
     flex-direction: row; /* Horizontal layout */
-    gap: 5rem;
     background: var(--widget-bg);
     padding: 2rem 4rem;
     border-radius: 5rem;
@@ -214,6 +213,10 @@ body{
 }
 .forecast-day{
     align-items: center;
+}
+.day-stats{
+    text-align: center;
+    margin-left: .4rem;
 }
 .day-name{
     font-weight: 500;
@@ -341,6 +344,8 @@ body{
     border-radius: 1rem;
     border: 0.1rem solid var(--widget-border);
     transition: box-shadow 0.3s ease;
+
+    animation: fadeIn 1.5s ease-out;
 }
 .menu-button:hover{
     box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
@@ -368,7 +373,7 @@ body{
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.4s linear;
 }
 
 .side-menu.active{
@@ -383,7 +388,6 @@ body{
     gap: 1.5rem;
     padding: 1rem 1.5rem;
     border-radius: 1.5rem;
-    transition: background 0.2s;
 }
 .menu-item-wrapper span{
     font-size: 1.6rem;
