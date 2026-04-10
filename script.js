@@ -33,7 +33,7 @@ function updateClock(){
         root.style.setProperty('--text-secondary', '#63635E');
         root.style.setProperty('--widget-bg', '#1A1A18');
         root.style.setProperty('--widget-border', 'rgba(255, 255, 255, 0.05)');
-        root.style.setProperty('--accent', '#501f1f');
+        root.style.setProperty('--accent', '#5a2b6a');
 
         // Play sound ONLY when entering Night mode for the first time
         if(!hasPlayedNightSound){
@@ -210,8 +210,9 @@ async function getShuttleData(){
             // If nextEntry doesn't exist
             else{
                 document.getElementById('shuttle-routes-widget').innerHTML = `
-                    <p>Route 2 @ Boardwalk Stop</p>
-                    <p style="margin-top: 1rem;">No Operational Shuttles</p>
+                    <p id="shuttle-widget-title">Shuttle Route</p>
+                    <p id="route-title">Route 2 @ Boardwalk Stop</p>
+                    <p style="margin-top: 1rem;">Fetching...</p>
                     <span class="last-updated" id="last-updated-shuttle">Last Updated: ${lastUpdatedTime()}</span>
                 `;
             }
@@ -252,15 +253,24 @@ async function getParkingData() {
             
             const percent = Math.round((occupied / total) * 100);
             
-            let statusColor = "var(--text-primary)";
-            if (percent > 90) statusColor = "#D62828";
-            else if (percent > 75) statusColor = "#FFB347";
-            else statusColor = "#07ffc5";
+            let statusColor = "";
+            let statusColorHeader = "";
+            if(percent >= 90){
+                statusColor = "rgb(212, 47, 47)";
+                statusColorHeader = "rgb(172, 40, 40)";
+            }
+            else if(percent >= 75){
+                statusColor = "#c78d3c";
+                statusColorHeader = "#9b6f32";
+            }
+            else{
+                statusColor = "#41c7a8";
+                statusColorHeader = "#2f917a";
+            }
 
             return `
-                <div class="garage-info" style="text-align: center;">
-                    <div class="garage-percentage-bar" style="background-color: ${statusColor}; box-shadow: 0 0 .3rem ${statusColor};"></div>
-                    <span class="garage-name">${name}</span>
+                <div class="garage-info" style="text-align: center; background-color: ${statusColor}; box-shadow: 0 0 .3rem ${statusColor};">
+                    <span class="garage-name" style="background-color: ${statusColorHeader};">${name}</span>
                     <span class="garage-percent">${percent}% Full</span>
                     <p class="spots-left">${available} spots remaining</p>
                 </div>
@@ -314,9 +324,9 @@ function updateSolarTracker(data){
     document.getElementById('weather-widget').innerHTML += `
         <div class="solar-container">
             <div class="solar-labels">
-                <span>${sunrise.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                <span>${sunrise.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: true})}</span>
                 <span class="solar-status">${statusText}</span>
-                <span>${sunset.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                <span>${sunset.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: true})}</span>
             </div>
             <div class="solar-track">
                 <div class="sun-marker" style="left: ${percent}%">${sunIcon}</div>
@@ -356,6 +366,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
+
 // Run the functions!
 updateClock();
 getWeather();
@@ -367,3 +378,21 @@ setInterval(updateClock, 1000); // Refresh clock every second
 setInterval(getWeather, 1800000); // Refresh weather every 30 minutes
 setInterval(getShuttleData, 20000); // Refresh Route 2 every 20 seconds
 setInterval(getParkingData, 300000); // Refresh Parking every 5 minutes
+
+// Auto-retry when internet comes back
+let isOnline = true;
+
+window.addEventListener('online', () => {
+    if (!isOnline) {
+        isOnline = true;
+        console.log('Internet restored, refreshing data...');
+        getWeather();
+        getShuttleData();
+        getParkingData();
+    }
+});
+
+window.addEventListener('offline', () => {
+    isOnline = false;
+    console.log('Internet lost...');
+});
