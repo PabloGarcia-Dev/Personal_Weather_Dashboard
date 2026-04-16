@@ -1,76 +1,426 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 :root{ /*Setting up variables for color pallete*/
-  --bg: #F5F2EC;
-  --text-primary: #1A1A18;
-  --text-secondary: #8A8880;
-  --widget-bg: #FFFFFF;
-  --widget-border: rgba(0, 0, 0, 0.07);
-  --accent: #2D6A4F;
+    --bg: #F5F2EC;
+    --text-primary: #1A1A18;
+    --text-secondary: #8A8880;
+    --widget-bg: #FFFFFF;
+    --widget-border: rgba(0, 0, 0, 0.07);
+    --accent: #d7fffe;
+}
+html{
+    font-size: 62.5%; /*This is like a universal constant for 1px*/
 }
 
 body{
-  background-color: var(--bg);
-  color: var(--text-primary);
-  font-family: 'DM Sans', sans-serif;
-  min-height: 100vh;
-  padding: 40px;
+    height: fit-content;
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    padding-bottom: 1.5rem;                                                                       /*Maybe change later*/
+}
+#main-app-section{
+    max-width: 180rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+
+    animation: fadeIn 1.5s ease-out;
 }
 
-#app{
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+@keyframes fadeIn{
+    from { opacity: 0; transform: translateY(1rem); }
+    to { opacity: 1; transform: translateY(0); }
 }
-
-/* Clock section */
+/*========================================= Clock Widget =========================================*/
 #clock-section{
-  text-align: center;
-  padding: 40px 0 20px;
+    text-align: center;
+    padding-top: .4rem;
 }
-
 #time{
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(72px, 12vw, 160px);
-  line-height: 1;
-  letter-spacing: -2px;
-  color: var(--text-primary);
+    font-family: 'DM Serif Display', serif;
+    font-size: 18rem;
+    line-height: .8;
+    letter-spacing: -.2rem;
+    color: var(--text-primary);
 }
-
 #date{
-  font-size: clamp(14px, 2vw, 18px);
-  font-weight: 300;
-  color: var(--text-secondary);
-  margin-top: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
-
-/* Widgets grid */
+/*========================================= Widget Grid =========================================*/
 #widgets{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    gap: 2rem;
+    max-width: 120rem;
+    margin: 0 auto;
 }
-
 .widget{
-  background: var(--widget-bg);
-  border: 1px solid var(--widget-border);
-  border-radius: 20px;
-  padding: 28px;
-  min-height: 200px;
+    background: var(--widget-bg);
+    border: .1rem solid var(--widget-border);
+    border-radius: 2rem;
+    min-height: 32rem;
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.widget:hover{
+    transform: translateY(-.5rem);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
+}
+.last-updated{
+    font: 'DM Serif Display', serif;
+    color: var(--text-secondary);
+    
+}
+/*========================================= Current Weather Widget =========================================*/
+#weather-widget{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem;
+}
+.weather-header p{
+    font-size: 1.5rem !important;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.3rem;
+}
+/* Big Temperature */
+.weather-main{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+.main-temp{
+    font-family: 'DM Serif Display';
+    font-size: 8rem;
+    line-height: 1;
+}
+.main-desc{
+    display: flex;
+    flex-direction: column;
+}
+.condition-text{
+    font-size: 2rem;
+    font-weight: 500;
+}
+.high-low{
+    font-size: 1.5rem;
+    color: var(--text-secondary);
 }
 
-/* Portrait orientation */
-@media (orientation: portrait) {
-  body { padding: 30px 24px; }
-  #widgets { grid-template-columns: 1fr; }
+/* Bottom Grid for Stats */
+.weather-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: .1rem solid var(--widget-border);
+    padding-top: 1rem;
+    gap: 1rem;
+}
+.stat-item{
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label{
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.stat-value{
+    font-size: 2rem;
+    font-weight: 400;
+}
+.rain-prob .stat-value{
+    color: #3b82f6; /* Signature blue for rain */
+}
+#last-updated-weather{
+    margin-top: .6rem;
+}
+/*========================================= Solar Tracker =========================================*/
+.solar-container{
+    margin-top: 2rem;
+    padding: 1rem 0;
+}
+.solar-labels{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+.solar-status{
+    font-family: 'DM Serif Display';
+    color: var(--text-primary);
+    font-size: 1.8rem;
+}
+.solar-track{
+    position: relative;
+    height: 1.2rem;
+    background: #2E3192;
+    background: linear-gradient(90deg,#2e3192 0%, #68347a 1%, #e63946 5%, #ffbf00 11%, #87ceeb 18%,#57BCFF 50%, #87ceeb 82%, #ffbf00 89%, #e63946 95%, #68347a 99%, #2e3192 100%);
+    border-radius: 1rem;
+    border: .2rem solid whitesmoke;
+}
+.sun-marker{
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.2rem;
+    transition: left 1s ease-in-out;
+}
+/*========================================= Forecast Bar =========================================*/
+.dailyWeather{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+#forecast-bar{
+    display: flex;
+    flex-direction: row; /* Horizontal layout */
+    background: var(--widget-bg);
+    padding: 2rem 4rem;
+    border-radius: 5rem;
+    border: .1rem solid var(--widget-border);
+    margin-bottom: -3rem;
+    width: 95%;
+    justify-content: space-around;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+#forecast-bar:hover{
+    transform: translateY(-.5rem);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
+}
+.forecast-day{
+    align-items: center;
+}
+.day-stats{
+    text-align: center;
+    margin-left: .4rem;
+}
+.day-name{
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    margin-bottom: -1rem;
+}
+.day-temp{
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: -.5rem;
+    display: block;
+}
+.day-rain{
+    font-size: 1.3rem;
+    display: block;
+    color: #3b82f6;
+    margin-top: .2rem;
+}
+/*========================================= Shuttle Widget =========================================*/
+#shuttle-routes-widget{
+    padding: 0 2rem 2rem 2rem;
+}
+#shuttle-routes-widget #shuttle-widget-title{
+    padding: 2rem 2.5rem 1rem 0;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+#shuttle-routes-widget #route-title{
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: .8rem;
+}
+#shuttle-routes-widget div{
+    font-size: 3rem;
+    font-family: 'DM Serif Display';
+    line-height: 1;
+}
+#shuttle-routes-widget #next-shuttle{
+    font-size: 2rem;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    font-family: 'DM Serif Display';
+}
+#last-updated-shuttle{
+    position: relative;
+    top: 1rem;
+}
+/*========================================= Parking Widget =========================================*/
+#ucf-parking-widget{
+    padding: 0;
+}
+#parking-title{
+    padding: 2rem 2.5rem 0 2rem;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: -1rem;
+}
+#parking-list{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 46rem;
+    height: 28rem;
+    justify-self: center;
+    margin: 0 1rem;
+    padding: 1rem;
+    gap: 1rem;
+}
+.garage-info{
+    margin-bottom: 2.5rem;
+    background-color: var(--accent);
+    width: 14rem;
+    height: 10.5rem;
+    border-radius: 1rem;
+    box-shadow: .5rem .3rem rgba(0, 0, 0, 0.12);
+}
+.garage-name{
+    font-family: 'DM Serif Display';
+    font-size: 2.8rem;
+    display: block;
+    border-radius: 1rem 1rem 0 0;
+    border-bottom: .2rem solid rgb(from var(--text-primary) r g b /0.2);
+}
+.garage-percent{
+    font-family: 'DM Serif Display';
+    font-size: 2.6rem;
+}
+.spots-left{
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+#last-updated-parking{
+    position: relative;
+    bottom: .6rem;
+    left: 70%;
+}
+/*========================================= App Menu =========================================*/
+/* Menu Button*/
+.menu-button{
+    position: fixed;
+    top: 3rem;
+    left: 3rem;
+    z-index: 1001;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: var(--widget-bg);
+    border-radius: 1rem;
+    border: 0.1rem solid var(--widget-border);
+    transition: box-shadow 0.3s ease;
+
+    animation: fadeIn 1.5s ease-out;
+}
+.menu-button:hover{
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
+}
+
+.bar{
+    width: 2.5rem;
+    height: 0.3rem;
+    background-color: var(--text-primary);
+    transition: 0.3s;
+    border-radius: .5rem;
+}
+
+/* Side Menu Container */
+.side-menu{
+    position: fixed;
+    top: 0;
+    left: -30rem;
+    width: 22rem;
+    height: 100%;
+    background-color: var(--widget-bg);
+    border-right: 0.1rem solid var(--widget-border);
+    z-index: 1000;
+    padding: 8rem 1rem 1rem 1.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.4s linear;
+}
+
+.side-menu.active{
+    transform: translateX(30rem);
+}
+
+/* Menu Items */
+.menu-item-wrapper{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 1.5rem;
+}
+.menu-item-wrapper span{
+    font-size: 1.6rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+.menu-item-wrapper:hover{
+    background: var(--bg);
+}
+.menu-item-wrapper:active{
+    opacity: .85;
+}
+
+/* Menu item icons */
+.menu-item-icon{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1.2rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+}
+.magic-menu-icon{
+    background-color: var(--text-primary);
+    background-image: url('images/mtg-icon.png');
+    background-size: 120%;
+}
+.system-menu-icon{
+    background-color: #00d4ff;
+    background-image: url('images/chip-icon.png');
+    background-size: 60%;
+}
+
+/* Rotate hamburger to X when active because it's cool*/
+.menu-button.active .bar:nth-child(1){
+    transform: translateY(0.8rem) rotate(45deg);
+}
+.menu-button.active .bar:nth-child(2){
+    opacity: 0;
+}
+.menu-button.active .bar:nth-child(3){
+    transform: translateY(-0.8rem) rotate(-45deg);
 }

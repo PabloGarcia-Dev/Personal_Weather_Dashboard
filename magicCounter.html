@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MTG Commander Counter</title>
+    <link rel="icon" href="images/mtg-logo.png">
+    <link rel="stylesheet" href="magicStyle.css">
+    <style id="button-hover-style"></style>
+</head>
+<body>
+    <header id="mtg-controls">
+        <a href="index.html" class="nav-link-wrapper">
+            <div class="dashboard" title="Open Dashboard"></div>
+        </a>
+        
+        <div class="counter-settings">
+            <button onclick="removePlayer()" class="add-player-btn" style="background: var(--charcoal); margin-right: 1rem;">Remove Player</button>
+            <button onclick="addPlayer()" class="add-player-btn">Add Player</button>
+            <button onclick="resetGame()" class="nav-btn" style="margin-left: 2rem; border-color: var(--inferno);">Reset All</button>
+        </div>
+    </header>
+
+    <main id="player-grid" class="grid-4"></main>
+
+    <script src="magicScript.js"></script>
+</body>
+</html>

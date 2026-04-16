@@ -8,21 +8,39 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div id="menu-toggle" class="menu-button" onclick="toggleMenu()">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
 
-    <div id="app">
+    <div class="side-menu" id="side-menu">
+      <a href="magicCounter.html" class="menu-item-wrapper">
+        <div class="menu-item-icon magic-menu-icon"></div>
+        <span>MTG Counter</span>
+      </a>
 
-      <!-- Clock section -->
+      <a href="system.html" class="menu-item-wrapper">
+        <div class="menu-item-icon system-menu-icon"></div>
+        <span>System Monitoring</span>
+      </a>
+    </div>
+
+    
+    <div id="main-app-section">
       <header id="clock-section">
         <div id="time">HH:MM:SS</div>
         <div id="date">MM/DD/YYYY</div>
+        <div class="dailyWeather">
+          <div id="forecast-bar">Loading 5-day forecast...</div>
+        </div>
       </header>
 
-      <!-- Widgets section -->
       <main id="widgets">
-        <div class="widget" id="weather-widget">Weather</div>
-        <div class="widget" id="weather-widget">Recommendations</div>
+        <div class="widget" id="weather-widget">Loading Weather...</div>
+        <div class="widget" id="ucf-parking-widget">Loading UCF Parking...</div>
+        <div class="widget" id="shuttle-routes-widget">Loading Shuttle Route...</div>
       </main>
-
     </div>
 
     <script src="script.js"></script>
