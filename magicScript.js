@@ -36,6 +36,14 @@ function createPlayerCard(id) {
                 <button onclick="updateCmdr(${id}, 1)">+</button>
             </div>
         </div>
+        <div class="poison-section">
+            <span>Poison Counters</span>
+            <div class="poison-btns">
+                <button onclick="updatePoison(${id}, -1)">-</button>
+                <b id="poison-${id}" class="poison-count">0</b>
+                <button onclick="updatePoison(${id}, 1)">+</button>
+            </div>
+        </div>
     `;
 
     grid.appendChild(card);
@@ -90,6 +98,18 @@ function updateCmdr(id, amount) {
     checkStatus(id);
 }
 
+function updatePoison(id, amount) {
+    const poisonEl = document.getElementById(`poison-${id}`);
+
+    let oldPoisonVal = parseInt(poisonEl.innerText);
+    let newPoisonVal = oldPoisonVal + amount;
+
+    if (newPoisonVal >= 0 && newPoisonVal <= 10) {
+        poisonEl.innerText = newPoisonVal;
+    }
+    checkStatus(id);
+}
+
 function checkStatus(id){
     const defeatedMessage = {
         0: "Defeated",
@@ -101,7 +121,7 @@ function checkStatus(id){
         6: "Finished",
         7: "Cooked",
         8: "Wiped",
-        9: "laughtered",
+        9: "slaughtered",
         10: "Obliterated",
         11: "Seg Faulted",
         12: "Dog Water",
@@ -120,8 +140,9 @@ function checkStatus(id){
     const cmdr = parseInt(document.getElementById(`cmdr-${id}`).innerText);
     const card = document.getElementById(`card-${id}`);
     const randNum = Math.floor(Math.random() * 22);
-    
-    if((life <= 0 || cmdr >= 21) && !(card.classList.contains('defeated'))){
+    const poison = parseInt(document.getElementById(`poison-${id}`).innerText);
+
+    if ((life <= 0 || cmdr >= 21 || poison >= 10) && !(card.classList.contains('defeated'))) {
         card.style.setProperty('--defeat-msg', `"${defeatedMessage[randNum]}"`);
         card.classList.add('defeated');
     } 

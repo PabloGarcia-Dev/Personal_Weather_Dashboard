@@ -128,6 +128,29 @@ body{
 .cmdr-count{
     font-size: clamp(1rem, 2vw, 2rem);
 }
+/*========================================= Poison Damage =========================================*/
+.poison-section{
+    margin-top: 15px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+    text-align: center;
+}
+.poison-damg-bttns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+.poison-damg-bttns button{
+    padding: 0 1em;               /* em so it scales with font-size */
+    font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+}
+.poison-damg-bttns button:hover{
+    cursor: pointer;
+}
+.poison-count{
+    font-size: clamp(1rem, 2vw, 2rem);
+}
 /*========================================= Watermark Logic =========================================*/
 .player-card.defeated{
     opacity: 0.5;
