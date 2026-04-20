@@ -48,11 +48,12 @@ body{
 #player-grid{
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: .5rem;
     padding: 0 2rem 2rem 2rem;
     justify-content: center;
     align-content: center;
     flex-grow: 1;
+    margin-top: -20px;
 
     animation: fadeIn 1.5s ease-out;
 }
@@ -69,14 +70,16 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    flex: 1 1 150px; /* Allows them to shrink and grow */
-    min-width: 15%;
-
+    flex: 0 2 240px; /* Don't grow, shrink if needed, base width 200px */
+    min-width: 210px;
+    max-width: 260px;
+    
     transition: all 0.3s ease;
 }
 .player-card:hover{
     transform: translateY(-.2rem);
     box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
+    z-index: 999;
 }
 /*========================================= Player Title =========================================*/
 .player-title{
@@ -105,28 +108,95 @@ body{
     cursor: pointer;
     color: white;
 }
-/*========================================= Commander Damage =========================================*/
-.cmdr-section{
-    margin-top: 15px;
-    border-top: 1px solid #444;
+/*========================================= Special Damage =========================================*/
+.damage-section{
     padding-top: 10px;
     text-align: center;
 }
-.cmdr-damg-bttns{
+.damage-section span{
+    font-size: clamp(.8rem, .8vw, 2rem);
+    text-align: center;
+}
+.damg-bttns{
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 5%;
 }
-.cmdr-damg-bttns button{
+.damg-bttns button{
     padding: 0 1em;               /* em so it scales with font-size */
     font-size: clamp(0.8rem, 1.5vw, 1.2rem);
 }
-.cmdr-damg-bttns button:hover{
+.damg-bttns button:hover{
     cursor: pointer;
 }
-.cmdr-count{
+.damg-count{
     font-size: clamp(1rem, 2vw, 2rem);
+}
+/*========= Commander Damage =========*/
+.cmdr-damg-bttns{
+    background-color:rgba(255, 255, 255, 0.2) ;
+    padding: 2px 4px;
+    gap: 15px;
+}
+.cmdr-opponents-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+}
+
+.cmdr-row{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0,0,0,0.1);
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.cmdr-section{
+    position: relative;
+    margin-top: 10px;
+}
+
+.menu-toggle-btn{
+    width: 100%;
+    padding: 8px;
+    background: #444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.cmdr-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    /* Default alignment */
+    left: 0; 
+    min-width: 200%; /* Adjust based on your UI needs */
+    background: #2a2a2a;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.hidden{
+    display: none;
+}
+
+.cmdr-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #333;
+}
+
+.cmdr-row:last-child{
+    border-bottom: none;
 }
 /*========================================= Watermark Logic =========================================*/
 .player-card.defeated{
@@ -151,7 +221,7 @@ body{
 /*========================================= Life Total =========================================*/
 .life-total{
     font-family: 'DM Serif Display';
-    font-size: clamp(2rem, 6vw, 5rem);  /* scales with viewport width */
+    font-size: clamp(1.5rem, 5vw, 4rem);  /* scales with viewport width */
     text-align: center;
     color: var(--mint);
 }

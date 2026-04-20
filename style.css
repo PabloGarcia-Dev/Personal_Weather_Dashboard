@@ -154,6 +154,9 @@ body{
 .rain-prob .stat-value{
     color: #3b82f6; /* Signature blue for rain */
 }
+.uv-index .stat-value{
+    color: #ff8800; /* Signature orange for sun */
+}
 #last-updated-weather{
     margin-top: .6rem;
 }
