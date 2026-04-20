@@ -148,6 +148,9 @@ body{
     font-size: 1.9rem;
     font-weight: 400;
 }
+.stat-value small{
+    margin-left: -.3rem;
+}
 .rain-prob .stat-value{
     color: #3b82f6; /* Signature blue for rain */
 }

@@ -71,7 +71,7 @@ async function getWeather(){ // async is a keyword that is used when we don't re
             <div class="weather-grid">
                 <div class="stat-item">
                     <span class="stat-label">Wind</span>
-                    <span class="stat-value">${currentWeather.wind_speed_10m} <small>mph</small></span>
+                    <span class="stat-value">${currentWeather.wind_speed_10m} <small>m/h</small></span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Humidity</span>
