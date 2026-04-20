@@ -8,15 +8,13 @@ let hasPlayedNightSound = false;
 function updateClock(){
     const now = new Date(); // Creates a Date object called 'now' to access the date and time
 
-    let hours = now.getHours(); // .padStart() function adds whatever character is specified at the beginning of the string if it doesn't have the required number of characters: in this case 2
+    const hours = String((now.getHours()) % 12 || 12).padStart(2, '0'); // .padStart() function adds whatever character is specified at the beginning of the string if it doesn't have the required number of characters: in this case 2. Converting the hours to str
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const seconds = now.getSeconds().toString().padStart(2, '0');
-
     const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12 || 12;
 
     document.getElementById('time').innerHTML = `
-            <span>${hours.toString().padStart(2, '0')}:${minutes}:${seconds}</span><span style="font-size: 6rem">${ampm}</span>
+            <span>${hours}:${minutes}:${seconds}</span><span style="font-size: 6rem">${ampm}</span>
 
     `; // sets the hours, minutes and seconds by updating HTML
 
@@ -82,6 +80,10 @@ async function getWeather(){ // async is a keyword that is used when we don't re
                 <div class="stat-item rain-prob">
                     <span class="stat-label">Rain</span>
                     <span class="stat-value">${currentRainChance}%</span>
+                </div>
+                <div class="stat-item uv-index">
+                    <span class="stat-label">UV Index</span>
+                    <span class="stat-value">${currentWeather.uv_index}</span>
                 </div>
             </div>
         `;
@@ -374,7 +376,7 @@ getParkingData();
 
 // Updating Function
 setInterval(updateClock, 1000); // Refresh clock every second
-setInterval(getWeather, 1800000); // Refresh weather every 30 minutes
+setInterval(getWeather, 600000); // Refresh weather every 10 minutes
 setInterval(getShuttleData, 20000); // Refresh Route 2 every 20 seconds
 setInterval(getParkingData, 300000); // Refresh Parking every 5 minutes
 

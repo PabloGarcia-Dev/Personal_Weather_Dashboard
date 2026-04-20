@@ -128,7 +128,7 @@ body{
 /* Bottom Grid for Stats */
 .weather-grid{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     border-top: .1rem solid var(--widget-border);
     padding-top: 1rem;
     gap: 1rem;
@@ -145,7 +145,7 @@ body{
     font-weight: 500;
 }
 .stat-value{
-    font-size: 2rem;
+    font-size: 1.9rem;
     font-weight: 400;
 }
 .rain-prob .stat-value{

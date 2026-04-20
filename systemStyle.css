@@ -61,6 +61,9 @@ body{
     transform: translateY(-.5rem);
     box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
 }
+.version-number{
+    margin-top: 1rem;
+}
 /*========================================= Decorative Corner Bracket =========================================*/
 .stat-card::before{
     content: "";
