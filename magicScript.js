@@ -13,14 +13,14 @@ function createPlayerCards(){
 
 function createPlayerCard(id){
     const playerBackgroundColor = {
-        1: `rgba(232, 59, 59, 0.8)`,
-        2: `rgba(13, 71, 161, 0.8)`,
-        3: `rgba(63, 172, 69, 0.8)`,
-        4: `rgba(133, 61, 177, 0.8)`,
-        5: `rgba(255, 143, 0, 0.8)`,
-        6: `rgba(136, 14, 79, 0.8)`,
-        7: `rgba(0, 105, 92, 0.8)`,
-        8: `rgba(69, 39, 160, 0.8)`
+        1: `rgba(200, 54, 54, 0.92)`,
+        2: `rgba(12, 57, 124, 0.92)`,
+        3: `rgba(49, 130, 53, 0.92)`,
+        4: `rgba(100, 47, 132, 0.92)`,
+        5: `rgba(0, 217, 166, 0.92)`,
+        6: `rgba(95, 11, 55, 0.92)`,
+        7: `rgba(0, 105, 92, 0.92)`,
+        8: `rgba(55, 31, 126, 0.92)`
     }
 
     const card = document.createElement('div');
@@ -210,7 +210,7 @@ function toggleCmdrMenu(id, event) {
     // Close all other open menus first
     closeAllMenus();
     
-    if (isHidden) {
+    if(isHidden){
         // Reset all positioning before measuring so stale styles don't skew getBoundingClientRect()
         menu.style.top = '100%';
         menu.style.bottom = 'auto';
@@ -224,20 +224,20 @@ function toggleCmdrMenu(id, event) {
         const viewportHeight = window.innerHeight;
 
         // Horizontal: flip left if right edge overflows
-        if (rect.right > viewportWidth) {
+        if(rect.right > viewportWidth){
             menu.style.left = 'auto';
             menu.style.right = '0';
         }
 
         // Vertical: flip upward if bottom edge overflows viewport
-        if (rect.bottom > viewportHeight) {
+        if(rect.bottom > viewportHeight){
             menu.style.top = 'auto';
             menu.style.bottom = '100%';
         }
     }
 }
 
-function closeAllMenus() {
+function closeAllMenus(){
     document.querySelectorAll('.cmdr-menu-dropdown').forEach(menu => {
         menu.classList.add('hidden');
         // Clear inline styles so next open always starts from a clean slate
