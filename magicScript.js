@@ -42,7 +42,7 @@ function createPlayerCard(id){
                 </button>
                 <div id="cmdr-menu-${id}" class="cmdr-menu-dropdown hidden">
                     <div class="cmdr-opponents-list">
-                        ${commanderDamageButtons(playerCount, id)}
+                        ${commanderDamageButtons(playerCount, id, playerBackgroundColor)}
                     </div>
                 </div>
             </div>
@@ -180,14 +180,14 @@ function checkStatus(id){
     }
 }
 
-function commanderDamageButtons(totalPlayers, targetId) {
+function commanderDamageButtons(totalPlayers, targetId, playerBackgroundColor) {
     let html = '';
     for(let attackerId = 1; attackerId <= totalPlayers; attackerId++){
         // Don't show a commander damage tracker for yourself
         if(attackerId !== targetId){
             html += `
                 <div class="cmdr-row">
-                    <small>From P${attackerId}</small>
+                    <small style="color: ${playerBackgroundColor[attackerId]}; font-weight: bold; background-color: #ffffffa5; padding: 1px 5px 0 5px; border-radius: 5px";>From P${attackerId}</small>
                     <div class="damg-bttns cmdr-damg-bttns">
                         <button onclick="updateCmdr(${targetId}, ${attackerId}, -1)">-</button>
                         <b id="cmdr-target${targetId}-from${attackerId}" class="cmdr-count">0</b>

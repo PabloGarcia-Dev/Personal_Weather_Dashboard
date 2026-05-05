@@ -8,10 +8,13 @@ let hasPlayedNightSound = false;
 function updateClock(){
     const now = new Date(); // Creates a Date object called 'now' to access the date and time
 
-    const hours = String((now.getHours()) % 12 || 12).padStart(2, '0'); // .padStart() function adds whatever character is specified at the beginning of the string if it doesn't have the required number of characters: in this case 2. Converting the hours to str
+    let hours = now.getHours(); // .padStart() function adds whatever character is specified at the beginning of the string if it doesn't have the required number of characters: in this case 2. Converting the hours to str
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const seconds = now.getSeconds().toString().padStart(2, '0');
+
     const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    hours = String(hours).padStart(2, '0');
 
     document.getElementById('time').innerHTML = `
             <span>${hours}:${minutes}:${seconds}</span><span style="font-size: 6rem">${ampm}</span>
@@ -292,9 +295,8 @@ function updateSolarTracker(data){
     
     if(isNight){
         root.style.setProperty('--bg1', '#0D0D0B');
-        root.style.setProperty('--bg2', '#13141a');
-        root.style.setProperty('--bg3', '#16121D');
-        root.style.setProperty('--bg4', '#121210');
+        root.style.setProperty('--bg2', '#171923');
+        root.style.setProperty('--bg3', '#261825');
 
         root.style.setProperty('--text-primary', '#E0DFD5');
         root.style.setProperty('--text-secondary', '#63635E');
@@ -311,9 +313,8 @@ function updateSolarTracker(data){
     }
     else{
         root.style.setProperty('--bg1', '#F5F2EC');
-        root.style.setProperty('--bg2', '#e9eef4');
-        root.style.setProperty('--bg3', '#F0E5EB');
-        root.style.setProperty('--bg4', '#E8E0D5');
+        root.style.setProperty('--bg2', '#dae6f5');
+        root.style.setProperty('--bg3', '#efdbe6');
 
         root.style.setProperty('--text-primary', '#1A1A18');
         root.style.setProperty('--text-secondary', '#8A8880');

@@ -9,9 +9,8 @@
 :root{ /*Setting up variables for color pallete*/
     /*Background Colors*/
     --bg1: #F5F2EC; /* Base Color */
-    --bg2: #e9eef4; /* Subtle Muted Blue */
-    --bg3: #F0E5EB; /* Subtle Muted Lavender */
-    --bg4: #E8E0D5; /* Slightly darker beige for depth */
+    --bg2: #dae6f5; /* Subtle Muted Blue */
+    --bg3: #efdbe6; /* Subtle Muted Lavender */
 
     --text-primary: #1A1A18;
     --text-secondary: #8A8880;
@@ -28,12 +27,12 @@ body{
     background: linear-gradient(135deg,
     var(--bg1) 0%, 
     var(--bg2) 25%, 
-    var(--bg3) 50%, 
-    var(--bg1) 75%,  
-    var(--bg4) 100%
+    var(--bg1) 50%, 
+    var(--bg3) 75%,  
+    var(--bg1) 100%
     );
-    background-size: 400% 400%;
-    animation: backgroundFlow 25s ease infinite;
+    background-size: 300% 300%;
+    animation: backgroundFlow 22s ease infinite;
 
     color: var(--text-primary);
     font-family: 'DM Sans', sans-serif;
