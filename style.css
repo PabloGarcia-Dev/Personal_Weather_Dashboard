@@ -143,6 +143,7 @@ body{
 .condition-text{
     font-size: 2rem;
     font-weight: 500;
+    line-height: 2rem;
 }
 .high-low{
     font-size: 1.5rem;
