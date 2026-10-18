@@ -207,6 +207,7 @@ async function getParkingData() {
     try {
         const response = await fetch("http://localhost:3001/parking");
         const data = await response.json();
+        console.log('Parking data:', JSON.stringify(data));
 
         // Wanted Parking garages
         const targetGarages = ["Garage A", "Garage B", "Garage C", "Garage D", "Garage H", "Garage I"];
@@ -262,7 +263,7 @@ async function getParkingData() {
         `;
     } catch (error) {
         console.error("Parking Fetch Error:", error);
-        document.getElementById('ucf-parking-widget').innerHTML = "Failed to load parking data.";
+        document.getElementById('ucf-parking-widget').innerHTML = "No parking available...";
     }
 }
 

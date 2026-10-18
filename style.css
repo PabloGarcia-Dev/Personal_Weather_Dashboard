@@ -72,13 +72,13 @@ body{
 }
 #time{
     font-family: 'DM Serif Display', serif;
-    font-size: 18rem;
+    font-size: 22rem;
     line-height: .8;
     letter-spacing: -.2rem;
     color: var(--text-primary);
 }
 #date{
-    font-size: 4rem;
+    font-size: 5.5rem;
     font-weight: 300;
     color: var(--text-secondary);
     margin-top: 1rem;
@@ -90,7 +90,7 @@ body{
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
     gap: 2rem;
-    max-width: 120rem;
+    /*max-width: 180rem;*/
     margin: 0 auto;
 }
 .widget{
@@ -108,6 +108,7 @@ body{
 .last-updated{
     font: 'DM Serif Display', serif;
     color: var(--text-secondary);
+    font-size: 1.5rem;
     
 }
 /*========================================= Current Weather Widget =========================================*/
@@ -118,7 +119,7 @@ body{
     padding: 2rem;
 }
 .weather-header p{
-    font-size: 1.5rem !important;
+    font-size: 2rem !important;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -133,7 +134,7 @@ body{
 }
 .main-temp{
     font-family: 'DM Serif Display';
-    font-size: 8rem;
+    font-size: 11rem;
     line-height: 1;
 }
 .main-desc{
@@ -141,12 +142,12 @@ body{
     flex-direction: column;
 }
 .condition-text{
-    font-size: 2rem;
+    font-size: 2.4rem;
     font-weight: 500;
     line-height: 2rem;
 }
 .high-low{
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: var(--text-secondary);
 }
 
@@ -164,13 +165,13 @@ body{
 }
 
 .stat-label{
-    font-size: 1.3rem;
+    font-size: 2rem;
     color: var(--text-secondary);
     text-transform: uppercase;
     font-weight: 500;
 }
 .stat-value{
-    font-size: 1.9rem;
+    font-size: 2.3rem;
     font-weight: 400;
 }
 .stat-value small{
@@ -193,7 +194,7 @@ body{
 .solar-labels{
     display: flex;
     justify-content: space-between;
-    font-size: 1.4rem;
+    font-size: 1.7rem;
     color: var(--text-secondary);
     margin-bottom: 1rem;
     font-weight: 500;
@@ -201,11 +202,11 @@ body{
 .solar-status{
     font-family: 'DM Serif Display';
     color: var(--text-primary);
-    font-size: 1.8rem;
+    font-size: 2.2rem;
 }
 .solar-track{
     position: relative;
-    height: 1.2rem;
+    height: 1.5rem;
     background: #2E3192;
     background: linear-gradient(90deg,#2e3192 0%, #68347a 1%, #e63946 5%, #ffbf00 11%, #87ceeb 18%,#57BCFF 50%, #87ceeb 82%, #ffbf00 89%, #e63946 95%, #68347a 99%, #2e3192 100%);
     border-radius: 1rem;
@@ -252,18 +253,18 @@ body{
 .day-name{
     font-weight: 500;
     text-transform: uppercase;
-    font-size: 2rem;
+    font-size: 3rem;
     color: var(--text-secondary);
     margin-bottom: -1rem;
 }
 .day-temp{
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 400;
     margin-bottom: -.5rem;
     display: block;
 }
 .day-rain{
-    font-size: 1.3rem;
+    font-size: 1.7rem;
     display: block;
     color: #3b82f6;
     margin-top: .2rem;
@@ -274,24 +275,24 @@ body{
 }
 #shuttle-routes-widget #shuttle-widget-title{
     padding: 2rem 2.5rem 1rem 0;
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-secondary);
     margin-bottom: 1rem;
 }
 #shuttle-routes-widget #route-title{
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: var(--text-secondary);
     margin-bottom: .8rem;
 }
 #shuttle-routes-widget div{
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-family: 'DM Serif Display';
     line-height: 1;
 }
 #shuttle-routes-widget #next-shuttle{
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: var(--text-secondary);
     margin-top: 1rem;
     font-family: 'DM Serif Display';
@@ -306,7 +307,7 @@ body{
 }
 #parking-title{
     padding: 2rem 2.5rem 0 2rem;
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-secondary);
@@ -316,7 +317,7 @@ body{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    width: 46rem;
+    width: 58rem;
     height: 28rem;
     justify-self: center;
     margin: 0 1rem;
@@ -326,24 +327,24 @@ body{
 .garage-info{
     margin-bottom: 2.5rem;
     background-color: var(--accent);
-    width: 14rem;
-    height: 10.5rem;
+    width: 18rem;
+    height: 12rem;
     border-radius: 1rem;
     box-shadow: .5rem .3rem rgba(0, 0, 0, 0.12);
 }
 .garage-name{
     font-family: 'DM Serif Display';
-    font-size: 2.8rem;
+    font-size: 3.2rem;
     display: block;
     border-radius: 1rem 1rem 0 0;
     border-bottom: .2rem solid rgb(from var(--text-primary) r g b /0.2);
 }
 .garage-percent{
     font-family: 'DM Serif Display';
-    font-size: 2.6rem;
+    font-size: 3rem;
 }
 .spots-left{
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin-top: 0.5rem;
 }
 #last-updated-parking{
@@ -375,8 +376,8 @@ body{
 }
 
 .bar{
-    width: 2.5rem;
-    height: 0.3rem;
+    width: 3.6rem;
+    height: 0.6rem;
     background-color: var(--text-primary);
     transition: 0.3s;
     border-radius: .5rem;
@@ -426,8 +427,8 @@ body{
 
 /* Menu item icons */
 .menu-item-icon{
-    width: 4rem;
-    height: 4rem;
+    width: 5rem;
+    height: 5rem;
     border-radius: 1.2rem;
     background-size: cover;
     background-position: center;
@@ -447,11 +448,11 @@ body{
 
 /* Rotate hamburger to X when active because it's cool*/
 .menu-button.active .bar:nth-child(1){
-    transform: translateY(0.8rem) rotate(45deg);
+    transform: translateY(1.1rem) rotate(45deg);
 }
 .menu-button.active .bar:nth-child(2){
     opacity: 0;
 }
 .menu-button.active .bar:nth-child(3){
-    transform: translateY(-0.8rem) rotate(-45deg);
+    transform: translateY(-1.1rem) rotate(-45deg);
 }

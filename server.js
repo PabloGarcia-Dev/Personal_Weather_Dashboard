@@ -32,8 +32,20 @@ const server = http.createServer((req, res) => {
         targetUrl = 'https://ucf.transloc.com/Services/JSONPRelay.svc/GetStopArrivalTimes?apiKey=8882812681&stopIds=54&version=2';
     }
     else if(req.url === '/parking'){
-        targetUrl = 'https://flow.my.ucf.edu/upstream/parking_widget';
-    }
+    const options = {
+        hostname: 'flow.my.ucf.edu',
+        path: '/upstream/parking_widget',
+        headers: {
+            'Cookie': 'PS_TokenSite=https://csprod-ss.net.ucf.edu/psc/CSPROD/?CSPROD-SS-PSJSESSIONID; SignOnDefault=; lcsrftoken=y8iXqhXj7ny5yIPt0wxHzrrt0svTFUmvznfVjPfrgeU=; devicetype=web; GCLB=CIykseSiicH5SRAD; csrftoken=T32oIrmLlQm9fNNigte55paDiaXkIJy7; sessionid=ycw14cze8htlhcl2n20ih6xzqo8v96zs; PS_LOGINLIST=https://csprod-ss.net.ucf.edu/CSPROD; CSPROD-STAFF-PSJSESSIONID=Qs01hOc9A-8rrQ_dD39vKOXi0ZA3qoFo!866083664; ExpirePage=https://csprod-ss.net.ucf.edu/psc/CSPROD/; PS_LASTSITE=https://csprod-ss.net.ucf.edu/psc/CSPROD/; CSPROD-SS-PSJSESSIONID=6CpDjkUhzIzg0ZhLXObmkY5xSXgxHKK6!-1824775315; PS_TOKEN=pAAAAAQDAgEBAAAAvAIAAAAAAAAsAAAABABTaGRyAk4Abwg4AC4AMQAwABTwAyGVoCNZHAQHn4U7YCB4TdaC6GQAAAAFAFNkYXRhWHicHYpBDkAwFERfESsLFyHVULVG7BBO4AQc0OGMTvLfTGb+DWRpYoz8TYgqHy4sHV7nlPKZlYVi5GTnYGOi/Qenl0oeREcfs6cWB7GjEb2WEBsLH3V5C1E=; PS_DEVICEFEATURES=width:2048 height:1152 pixelratio:1.25 touch:0 geolocation:1 websockets:1 webworkers:1 datepicker:1 dtpicker:1 timepicker:1 dnd:1 sessionstorage:1 localstorage:1 history:1 canvas:1 svg:1 postmessage:1 hc:0 maf:0; psback=%22%22url%22%3A%22https%3A%2F%2Fcsprod-ss.net.ucf.edu%2Fpsc%2FCSPROD_4%2FEMPLOYEE%2FSA%2Fc%2FSCC_PROFILE_FL.SCC_PROFILE_MD_FL.GBL%3Fpage%3DSCC_MD_TGT_PAGE_FL%22%20%22label%22%3A%22Profile%22%20%22origin%22%3A%22PIA%22%20%22layout%22%3A%221%22%20%22refurl%22%3A%22https%3A%2F%2Fcsprod-ss.net.ucf.edu%2Fpsc%2FCSPROD_4%2FEMPLOYEE%2FSA%22%22; PS_TOKENEXPIRE=27_Aug_2026_14:10:00_GMT; JSESSIONID_ihub-frontend=node01eiiwi5nnwf358u1net4bnqx18948.node0'
+        }
+    };
+    https.get(options, (apiRes) => {
+        let body = '';
+        apiRes.on('data', chunk => body += chunk);
+        apiRes.on('end', () => res.end(body));
+    });
+    return;
+}
     else if(req.url === '/weather'){
         const latitude = 28.586779934551355; // coordinates of where we are
         const longitude = -81.20615364774744;
